@@ -3,6 +3,7 @@
     <SuperChat
       v-for="donate in donateData.value"
       @stop-show="toggleShow(donate)"
+      @speech="speechWithVoiceInd(donate.name, donate.amount, donate.msg)"
       :donate="donate"
       :img="img"
       :key="donate.donateid + donate.from"
@@ -17,19 +18,18 @@ const obs = ref(null);
 
 const donateData = reactive({ value: [] });
 
+
 const donataComp = (donateA, donateB) => {
   return donateA.donateid === donateB.donateid && donateA.from === donateB.from;
 };
-const { opay, ecpay, img,server } = useUrlSearchParams();
+const { opay, ecpay, img, server ,voiceId} = useUrlSearchParams();
+
 const gendoanteData = async () => {
-  const { data, pending, error, refresh } = await useFetch(
-    server,
-    {
-      method: "POST",
-      body: { opay, ecpay },
-      server: false,
-    }
-  );
+  const { data, pending, error, refresh } = await useFetch(server, {
+    method: "POST",
+    body: { opay, ecpay },
+    server: false,
+  });
   _remove(donateData.value, (v) => v.isShow === false);
   donateData.value = _unionWith(
     data.value.opay.map((v) => ({
@@ -86,7 +86,10 @@ const toggleDonates = () => {
     }, index * 5000);
   });
 };
-
+const speechWithVoiceInd = (who,amount,msg) => {
+  return speech(who,amount,msg,voiceId)
+  
+};
 onMounted(() => {
   // toggleDonates();
   // setInterval(toggleDonates, donates.length * 5000);

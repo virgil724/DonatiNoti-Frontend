@@ -32,7 +32,7 @@
   </Transition>
 </template>
 <script setup>
-const emit = defineEmits(["stop-show"]);
+const emit = defineEmits(["stop-show","speech"]);
 const props = defineProps({
   img: String,
   donate: Object,
@@ -91,6 +91,16 @@ watch(
 );
 
 onMounted(() => {
+  const [topColor, btmColor, textColor] = getSuperChatColors(
+      props.donate.amount
+    );
+
+    colorTuple.value = {
+      topColor: topColor,
+      btmColor: btmColor,
+      textColor: textColor,
+    };
+  emit("speech")
   setTimeout(() => {
     emit("stop-show");
   }, 100000);
