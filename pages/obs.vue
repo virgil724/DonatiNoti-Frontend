@@ -18,11 +18,10 @@ const obs = ref(null);
 
 const donateData = reactive({ value: [] });
 
-
 const donataComp = (donateA, donateB) => {
   return donateA.donateid === donateB.donateid && donateA.from === donateB.from;
 };
-const { opay, ecpay, img, server ,voiceId} = useUrlSearchParams();
+const { opay, ecpay, img, server, voice, voiceId } = useUrlSearchParams();
 
 const gendoanteData = async () => {
   const { data, pending, error, refresh } = await useFetch(server, {
@@ -86,10 +85,15 @@ const toggleDonates = () => {
     }, index * 5000);
   });
 };
-const speechWithVoiceInd = (who,amount,msg) => {
-  return speech(who,amount,msg,voiceId)
-  
+
+const speechWithVoiceInd = (who, amount, msg) => {
+  if (voice) {
+    return speech(who, amount, msg, voiceId);
+  }
+  const notSpeech = (...arg) => {};
+  return notSpeech(who, amount, msg, voiceId);
 };
+
 onMounted(() => {
   // toggleDonates();
   // setInterval(toggleDonates, donates.length * 5000);
