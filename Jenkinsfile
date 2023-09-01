@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                nodejs(nodeJSInstallationName:'Node 18.17.1') {
+                nodejs(nodeJSInstallationName:'LTS') {
                         sh 'npm -v'
 
                 }
