@@ -1,9 +1,9 @@
 <template>
-  <div class="grid gap-2 justify-center scroll-smooth" ref="obs">
+  <div class="flex flex-col gap-2 justify-center scroll-smooth" ref="obs">
     <SuperChat
       v-for="donate in donateData.value"
       @stop-show="toggleShow(donate)"
-      @speech="speechWithVoiceInd(donate.name, donate.amount, donate.msg)"
+      @speech="speechWithVoiceInd(donate.name,donate.amount,donate.msg)"
       :donate="donate"
       :img="img"
       :key="donate.donateid + donate.from"
@@ -11,11 +11,11 @@
       <!-- <va-button @click="donate.isShow = !donate.isShow">Test</va-button> -->
     </SuperChat>
   </div>
+
   <!-- {{ donateData }} -->
 </template>
 <script setup>
 const obs = ref(null);
-
 const donateData = reactive({ value: [] });
 
 const donataComp = (donateA, donateB) => {
@@ -29,6 +29,7 @@ const gendoanteData = async () => {
     body: { opay, ecpay },
     server: false,
   });
+
   _remove(donateData.value, (v) => v.isShow === false);
   donateData.value = _unionWith(
     data.value.opay.map((v) => ({
@@ -87,14 +88,15 @@ const toggleDonates = () => {
 };
 
 const speechWithVoiceInd = (who, amount, msg) => {
-  if (voice) {
-    return speech(who, amount, msg, voiceId);
+
+  if (voice=='true') {
+    console.log("start")
+    speech(who, amount, msg, voiceId);
   }
-  const notSpeech = (...arg) => {};
-  return notSpeech(who, amount, msg, voiceId);
 };
 
 onMounted(() => {
+  
   // toggleDonates();
   // setInterval(toggleDonates, donates.length * 5000);
   setInterval(gendoanteData, 5000);

@@ -148,7 +148,6 @@ onMounted(() => {
   }, 1000);
   speechSynthesis.addEventListener("voiceschanged", (event) => {
     options.value = speechSynthesis.getVoices().map((v) => v.voiceURI);
-    voice.value = speechSynthesis.getVoices();
   });
 });
 </script>
