@@ -22,6 +22,12 @@ useSeoMeta({
 });
 
 useHead({
+  meta: [
+    {
+      name: "google-site-verification",
+      content: "Kr4cRx1MMu-6Ar1okU1OgYcsUbKHSVgG1oEbsb6Us78",
+    },
+  ],
   htmlAttrs: {
     lang: "zh-tw",
   },
