@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  site: {
+    url: 'https://noti.virgil246.eu.org',
+  },
+
   devtools: {
     enabled: true,
 
@@ -8,7 +12,7 @@ export default defineNuxtConfig({
     }
   },
   modules: ['@vuestic/nuxt', '@nuxtjs/tailwindcss', '@vueuse/nuxt', 'nuxt-lodash'
-  ,'nuxt-simple-sitemap'],
+    , 'nuxt-simple-sitemap'],
   vuestic: {
     config:
     {
