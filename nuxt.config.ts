@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     }
   },
   modules: ['@vuestic/nuxt', '@nuxtjs/tailwindcss', '@vueuse/nuxt', 'nuxt-lodash'
-  ],
+  ,'nuxt-simple-sitemap'],
   vuestic: {
     config:
     {
