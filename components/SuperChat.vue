@@ -101,8 +101,8 @@ onMounted(() => {
       textColor: textColor,
     };
   emit("speech")
-  setTimeout(() => {
-    emit("stop-show");
-  }, 100000);
+  // setTimeout(() => {
+  //   emit("stop-show");
+  // }, 100000);
 });
 </script>
