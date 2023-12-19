@@ -21,6 +21,7 @@
     "sass-loader": "^13.3.2"
   },
   "dependencies": {
-    "@vuestic/nuxt": "^1.0.14"
+    "@vuestic/nuxt": "^1.0.14",
+    "html-to-image": "^1.11.11"
   }
 }

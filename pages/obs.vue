@@ -3,7 +3,8 @@
     <SuperChat
       v-for="donate in donateData.value"
       @stop-show="toggleShow(donate)"
-      @speech="speechWithVoiceInd(donate.name,donate.amount,donate.msg)"
+      @speech="speechWithVoiceInd(donate.name, donate.amount, donate.msg)"
+      @vts-paste="loadImage"
       :donate="donate"
       :img="img"
       :key="donate.donateid + donate.from"
@@ -17,11 +18,11 @@
 <script setup>
 const obs = ref(null);
 const donateData = reactive({ value: [] });
-
+const { loadImage } = useVTSws("ws://localhost:8001");
 const donataComp = (donateA, donateB) => {
   return donateA.donateid === donateB.donateid && donateA.from === donateB.from;
 };
-const { opay, ecpay, img, server, voice, voiceId } = useUrlSearchParams();
+const { opay, ecpay, img, server, voice, voiceId, vts } = useUrlSearchParams();
 
 const gendoanteData = async () => {
   const { data, pending, error, refresh } = await useFetch(server, {
@@ -76,7 +77,7 @@ const { width, height } = useWindowSize();
 const toggleShow = (donate) => {
   donate.isShow = false;
 };
-const toggleDonates = () => {
+const toggleDonates = (donates) => {
   donates.forEach((donate, index) => {
     setTimeout(() => {
       donate.isShow = true;
@@ -88,15 +89,13 @@ const toggleDonates = () => {
 };
 
 const speechWithVoiceInd = (who, amount, msg) => {
-
-  if (voice=='true') {
-    console.log("start")
+  if (voice == "true") {
+    console.log("start");
     speech(who, amount, msg, voiceId);
   }
 };
 
 onMounted(() => {
-  
   // toggleDonates();
   // setInterval(toggleDonates, donates.length * 5000);
   setInterval(gendoanteData, 5000);

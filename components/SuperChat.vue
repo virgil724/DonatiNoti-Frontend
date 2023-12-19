@@ -6,9 +6,10 @@
     enter-active-class="transition duration-300"
     leave-to-class="-translate-x-[150%] opacity-0"
     leave-active-class="transition duration-300"
+    @after-enter="SC2Base64"
     appear
   >
-    <div class="flex flex-col w-full" v-if="props.donate.isShow">
+    <div ref="scDom" class="flex flex-col w-full" v-if="props.donate.isShow">
       <div>
         <div
           class="flex flex-row rounded-t-lg"
@@ -32,11 +33,12 @@
   </Transition>
 </template>
 <script setup>
-const emit = defineEmits(["stop-show","speech"]);
+const emit = defineEmits(["stop-show", "speech", "vts-paste"]);
 const props = defineProps({
   img: String,
   donate: Object,
 });
+const scDom = ref();
 const colorTuple = ref({
   topColor: "#1565C0",
   btmColor: "#1565C0",
@@ -89,18 +91,25 @@ watch(
     };
   }
 );
+import { toPng } from "html-to-image";
 
+const SC2Base64 = () => {
+  
+  toPng(scDom.value).then(function (DataUrl) {
+    emit("vts-paste", DataUrl);
+  });
+};
 onMounted(() => {
   const [topColor, btmColor, textColor] = getSuperChatColors(
-      props.donate.amount
-    );
+    props.donate.amount
+  );
 
-    colorTuple.value = {
-      topColor: topColor,
-      btmColor: btmColor,
-      textColor: textColor,
-    };
-  emit("speech")
+  colorTuple.value = {
+    topColor: topColor,
+    btmColor: btmColor,
+    textColor: textColor,
+  };
+  emit("speech");
   // setTimeout(() => {
   //   emit("stop-show");
   // }, 100000);
